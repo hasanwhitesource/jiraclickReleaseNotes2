@@ -24,7 +24,7 @@ jobs:
 
       - name: Update comment
         if: ${{ steps.check.outputs.triggered == 'true' }}
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
@@ -57,7 +57,7 @@ jobs:
 
       - name: Clone branch of PR
         if: ${{ steps.check.outputs.triggered == 'true' }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: ${{ steps.pr_data.outputs.sha }}
@@ -117,14 +117,14 @@ jobs:
 
       - name: Add reactions to mark deployment as sucessfull
         if: ${{ steps.check.outputs.triggered == 'true' }}
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@v2
         with:
           comment-id: ${{ github.event.comment.id }}
           reactions: hooray
 
       - name: Add reactions to mark deployment as failde
         if: ${{ failure() && steps.check.outputs.triggered == 'true' }}
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@v2
         with:
           comment-id: ${{ github.event.comment.id }}
           reactions: "-1"
